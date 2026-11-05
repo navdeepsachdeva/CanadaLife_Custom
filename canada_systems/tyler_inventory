@@ -11,11 +11,13 @@ floor="Level 3 Inventory file"
 [cisco]
 iosxe1.lab.example.com
 iosxe2.lab.example.com floor="Level 8 Inventory file IOSXE2 ONLY"
+172.25.250.20
 
 
 [juniper]
 junos1.lab.example.com
 junos2.lab.example.com
+172.25.250.22
 
 [arista]
 arista1.lab.example.com
