@@ -1,0 +1,79 @@
+- name: FACTS Demo
+  hosts: servera*
+  gather_facts: false
+  tasks:
+    - name: Collect Hardware Facts Manually
+      ansible.builtin.setup:
+        gather_subset: all
+
+    - name: Store Facts in File
+      ansible.builtin.copy:
+        dest: ./{{ ansible_facts['hostname'] }}.txt
+        content: |
+          Architecture  = {{ ansible_facts['architecture'] }}
+          Date          = {{ ansible_facts['date_time']['date'] }}
+          Time          = {{ ansible_facts['date_time']['time'] }}
+          IP Address    = {{ ansible_facts['default_ipv4']['address'] }}
+          SDA Size      = {{ ansible_facts['devices']['sda']['size'] }}
+          SDB Size      = {{ ansible_facts['devices']['sdb']['size'] | default('Not Available') }}
+          OS            = {{ ansible_facts['distribution'] }}
+          OS Version    = {{ ansible_facts['distribution_version'] }}
+          FQDN          = {{ ansible_facts['fqdn'] }}
+          Hostname      = {{ ansible_facts['hostname'] }}
+          Kernel        = {{ ansible_facts['kernel'] }}
+          Free Memory   = {{ ansible_facts['memory_mb']['real']['free'] }}
+          Total Memory  = {{ ansible_facts['memory_mb']['real']['total'] }}
+          Python Ver    = {{ ansible_facts['python_version'] }}
+      delegate_to: workstation.lab.example.com
+
+    - name: Collect Packages Facts Manually
+      ansible.builtin.package_facts:
+
+    - name: Print Package Facts
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts.packages.httpd[0].version }}"
+
+    - name: Collect Service Facts Manually
+      ansible.builtin.service_facts:
+
+    - name: Print Service Facts
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['services']['httpd.service']['state'] }}"
+
+    - name: Ensure Example Repo exists
+      ansible.builtin.yum_repository:
+        file: example
+        name: example-internal
+        description: Example Inc. Internal repo
+        baseurl: http://materials.example.com/yum/repository/
+        enabled: true
+        gpgcheck: true
+        state: present
+
+    - name: Create a Group
+      ansible.builtin.group:
+        name: developers
+        state: present
+        gid: 1050
+
+    - name: Create a User
+      ansible.builtin.user:
+        name: keith
+        comment: Keith K
+        password: "{{ 'redhat123' | password_hash('sha512') }}"
+        uid: 1100
+        groups: developers
+    - name: Remove tempuser
+      ansible.posix.at:
+        command: userdel -r keith
+        count: 20
+        units: minutes
+        unique: true
+    - name: Schedule backups for my home directory
+      ansible.builtin.cron:
+        name: Backup my home directory
+        user: devops
+        job: /home/devops/bin/backup-home-dir
+        minute: 0
+        hour: 16
+        weekday: 5

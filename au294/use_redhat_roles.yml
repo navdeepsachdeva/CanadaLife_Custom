@@ -1,0 +1,49 @@
+- name: Use RedHat Role
+  hosts: servera*
+  gather_facts: false
+  vars:
+    timesync_ntp_servers:
+      - hostname: foo.example.com
+        iburst: true
+      - hostname: bar.example.com
+        iburst: true
+      - hostname: baz.example.com
+        iburst: true
+  # post_tasks:
+  #   - name: Inform customer with Service UP
+  #     ansible.builtin.command: sleep 2
+
+  # # roles:
+  # #   - role: redhat.rhel_system_roles.timesync
+
+
+  # pre_tasks:
+  #   - name: Collect Facts Manually
+  #     ansible.builtin.setup:
+  #       gather_subset: all
+
+  #   - name: Inform customer with Service Down
+  #     ansible.builtin.command: sleep 2
+
+  tasks:
+    - name: Add Extra Task
+      ansible.builtin.command: sleep 2
+      notify:
+        - Extra Handler
+
+    - name: Some Task WHich doesn't make change
+      ansible.builtin.copy:
+        content: "Hello"
+        dest: /tmp/f1
+      notify:
+        - File Handler
+
+
+  handlers:
+    - name: Extra Handler
+      ansible.builtin.debug:
+        msg: "I slept for 2 second"
+
+    - name: File Handler
+      ansible.builtin.debug:
+        msg: "I Changed File"

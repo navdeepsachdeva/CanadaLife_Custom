@@ -1,0 +1,23 @@
+## INI Format Inventory ##
+
+
+[all:vars]
+floor="Level 3 Inventory file or script group vars"
+
+[dev]
+servera.lab.example.com
+
+[test]
+serverb.lab.example.com
+
+[prod]
+serverc.lab.example.com
+serverd.lab.example.com floor="Level 8 Inventory file or script host vars"
+
+
+[control]
+workstation.lab.example.com
+
+[control:vars]
+# ansible_user=student
+ansible_connection=local

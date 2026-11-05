@@ -1,0 +1,25 @@
+---
+ansible-navigator:
+  ansible:
+    config:
+      path: ./ansible.cfg
+    inventory:
+      entries:
+      - ./inventory
+  editor:
+    command: vi +{line_number} {filename}
+    console: true
+  execution-environment:
+    container-engine: podman
+    enabled: true
+    image: utility.lab.example.com:5000/ansible-automation-platform-26/ee-supported-rhel9:latest
+    pull:
+      policy: missing
+  format: yaml
+  images:
+    details:
+    - everything
+  mode: stdout
+  playbook-artifact:
+    enable: false
+    save-as: '{playbook_dir}/{playbook_name}-artifact-{time_stamp}.json'
