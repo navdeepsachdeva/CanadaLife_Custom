@@ -1,0 +1,21 @@
+- name: Cisco Playbook
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Modify GE1 Description
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "Hello Daniel 1"
+
+    - name: Modify GE2 Description
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet2
+            description: "Hello Andrew 2"
+
+    - name: Setup motd banner
+      cisco.ios.ios_banner:
+        banner: motd
+        state: present
+        text: "Hello Second Day 2"

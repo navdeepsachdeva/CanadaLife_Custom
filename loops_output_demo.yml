@@ -1,0 +1,18 @@
+- name: Cisco Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  vars_files:
+    - ./outside_vars.yml
+  # loop was introduced in Ansible 2.5
+  tasks:
+
+    - name: Collect Facts Manually
+      cisco.ios.ios_facts:
+        gather_network_resources: all
+
+    - name: Print Simple List
+      loop: "{{ ansible_facts['network_resources']['vlans'] }}"
+      ansible.builtin.debug:
+        msg: "{{ item['mtu'] }} -- {{ item['name'] }}- -- {{ item['vlan_id']}}"
+      # loop: "{{ simple_list }}"
+      # with_items: "{{ simple_list }}"

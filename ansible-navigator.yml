@@ -1,0 +1,22 @@
+---
+ansible-navigator:
+  ansible:
+    config:
+      help: false
+    inventory:
+      entries:
+      - ./canada_systems
+      help: false
+  editor:
+    command: vi +{line_number} {filename}
+    console: true
+  execution-environment:
+    container-engine: podman
+    enabled: true
+    image: aap.lab.example.com/ee-au457-rhel9:latest
+    pull:
+      policy: missing
+  mode: stdout
+  playbook-artifact:
+    enable: false
+    save-as: '{playbook_dir}/{playbook_name}-artifact-{time_stamp}.json'

@@ -1,0 +1,20 @@
+interface GigabitEthernet1
+  description Hello 1
+
+interface GigabitEthernet2
+  description Hello 2
+
+
+
+
+# NTP Commands ##
+ntp server 172.25.23.240
+ntp server 172.25.23.230
+ntp server 172.25.23.250
+
+# DNS Commands ##
+ip name-server 172.25.250.210
+ip name-server 172.25.250.220
+ip name-server 172.25.250.221
+ip name-server 172.25.250.222
+ip name-server 172.25.250.223

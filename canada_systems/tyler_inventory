@@ -1,0 +1,48 @@
+# INI Format Inventory File #
+
+aap.lab.example.com
+
+[all:vars]
+floor="Level 3 Inventory file"
+# ansible_user=student
+# ansible_ssh_private_key_file=~/.ssh/lab_rsa
+# ansible_password=student
+
+[cisco]
+iosxe1.lab.example.com
+iosxe2.lab.example.com floor="Level 8 Inventory file IOSXE2 ONLY"
+
+
+[juniper]
+junos1.lab.example.com
+junos2.lab.example.com
+
+[arista]
+arista1.lab.example.com
+arista2.lab.example.com
+
+[control]
+workstation.lab.example.com ansible_user=devops
+
+
+# [juniper:vars]
+# ansible_connection=local
+# 
+# [arista:vars]
+# ansible_connection=ansible.netcommon.network_cli
+# ansible_network_os=arista.eos.eos
+
+# [cisco:vars]
+# ansible_connection=ansible.netcommon.network_cli
+# ansible_network_os=cisco.ios.ios
+
+
+# [network:children]
+# cisco
+# arista
+
+
+# [range]
+# 172.25.250.[1:20:4]
+# 192.168.[1:4].[5:8]
+# system[a:f].example.com

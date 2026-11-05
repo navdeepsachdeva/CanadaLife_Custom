@@ -1,0 +1,15 @@
+- name: Roles Demo
+  hosts: iosxe1*
+  gather_facts: false
+  # Static Role
+  roles:
+    # - role: role1
+    # - role: rol2
+    # - role: cisco_update
+    - role: cisco_nic
+  
+  tasks:
+    - name: Import/ Include a Role
+      ansible.builtin.import_role:
+        name: cisco_config
+      when: meme is defined

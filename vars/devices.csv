@@ -1,0 +1,4 @@
+hostname,platform,management_ip,site
+router1,ios,10.0.1.1,datacenter-a
+switch1,junos,10.0.2.1,datacenter-b
+router2,ios,10.0.1.2,datacenter-a

@@ -1,0 +1,23 @@
+- name: Roles External
+  hosts: aap*
+  gather_facts: false
+
+  roles:
+    - role: keith_iis
+    - role: network.base.remediate
+
+  tasks:
+    - name: Run role via Condition 1
+      ansible.builtin.import_role:
+        name: geerlingguy.php
+      when: meme is not defined
+
+    - name: Run role via Condition 2
+      ansible.builtin.import_role:
+        name: network.acls.health_checks
+      when: meme is not defined
+
+    - name: Run role via Condition 1
+      ansible.builtin.import_role:
+        name: cisco.catalystcenter.discovery
+      when: meme is not defined

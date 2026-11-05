@@ -1,0 +1,28 @@
+- name: Register Cisco Playbook
+  hosts: iosxe1.lab.example.com
+  gather_facts: false
+  tasks:
+    - name: Modify GE1 Description
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "Hello Daniel 3"
+      register: joseph_captured
+
+    - name: Print Detailed Output
+      ansible.builtin.debug:
+        # var: joseph_captured.changed
+        var: joseph_captured
+
+    - name: Modify GE2 Description
+      when: joseph_captured.changed == true
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet2
+            description: "Hello Andrew 4"
+
+    # - name: Setup motd banner
+    #   cisco.ios.ios_banner:
+    #     banner: motd
+    #     state: present
+    #     text: "Hello Second Day 2"

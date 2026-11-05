@@ -1,0 +1,46 @@
+- name: Facts Demo
+  hosts: iosxe1*
+  gather_facts: false
+  vars:
+    operating_systems:
+      - arista
+      - nxos
+      - redback
+      # - ios
+  tasks:
+
+    - name: Collect Facts Manually
+      cisco.ios.ios_facts:
+        gather_subset: all
+        gather_network_resources: all
+      
+    - name: Store Facts in File
+      ansible.builtin.copy:
+        dest: host_vars/{{ inventory_hostname }}.txt
+        content: |
+          API             = {{ ansible_facts['net_api'] }}
+          Hostname        = {{ ansible_facts['net_hostname'] }}
+          Image           = {{ ansible_facts['net_image'] }}
+          IOS Type        = {{ ansible_facts['net_iostype'] }}
+          Model           = {{ ansible_facts['net_model'] }}
+          Python Version  = {{ ansible_facts['net_python_version'] }}
+          Serial Number   = {{ ansible_facts['net_serialnum'] }}
+          Net System      = {{ ansible_facts['net_system'] }}
+          Net Version     = {{ ansible_facts['net_version'] }}
+          Free Memory     = {{ ansible_facts['net_memfree_mb'] }}
+          Total Memory    = {{ ansible_facts['net_memtotal_mb'] }}
+          Encryption      = {{ ansible_facts['network_resources']['service']['private_config_encryption'] }}
+      # delegate_to: aap.lab.example.com
+
+    - name: Modify GE1 Description
+      # when: ansible_facts['net_version'] > "17" and ansible_facts['net_memfree_mb'] >=2200
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "Hello Daniel ME"
+      when:
+        # - ( ansible_facts['net_version'] > "18" and ansible_facts['net_memfree_mb'] >=2200 ) or (ansible_facts['net_model'] == "C8000V")
+        - ansible_facts['net_version'] > "18" or ansible_facts['net_model'] == "C8000V"
+        - ansible_facts['net_memfree_mb'] >=2200 
+        - ansible_facts['net_system'] not in operating_systems
+        - youme is not defined

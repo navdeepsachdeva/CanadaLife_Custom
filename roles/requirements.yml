@@ -1,0 +1,14 @@
+roles:
+  - src: navdeepsachdeva.windows_iis
+    name: keith_iis
+
+  - src: geerlingguy.php
+
+  # - src: https://git.example.com/someauthor/netrole
+  #   scm: git
+  #   version: "1.5.0"
+
+  # - src: file:///opt/local/roles/myrole.tar
+  #   name: myrole
+  # - src: https://www.example.com/role-archive/someauthor.otherrole.tar
+  #   name: someauthor.otherrole

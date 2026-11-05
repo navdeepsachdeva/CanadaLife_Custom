@@ -1,0 +1,4 @@
+---
+# vars file for cisco_nic
+
+cisco_nic_ge2_desc: "Level 15 Vars GE2"

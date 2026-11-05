@@ -1,0 +1,17 @@
+{% for nic in complex_list  %}
+interface {{ nic['eth_name'] }}
+  description {{ nic['eth_desc'] }}
+
+{% endfor  %}
+
+
+
+# NTP Commands ##
+{% for nt in cisco_ntp_servers %}
+ntp server {{ nt }}
+{% endfor %}
+
+# DNS Commands ##
+{% for ns in cisco_name_servers %}
+ip name-server {{ ns }}
+{% endfor %}

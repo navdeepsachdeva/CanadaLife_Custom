@@ -1,0 +1,13 @@
+---
+# tasks file for cisco_config
+- name: Cisco Config 1
+  ansible.builtin.command: sleep 2
+
+- name: Cisco Config 2
+  ansible.builtin.command: sleep 2
+
+- name: Cisco Config 3
+  ansible.builtin.command: sleep 2
+
+- name: Cisco Config 4
+  ansible.builtin.command: sleep 2

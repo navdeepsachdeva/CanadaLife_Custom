@@ -1,0 +1,39 @@
+- name: First Linux Playbook
+  hosts: aap.lab.example.com
+  gather_facts: false
+  vars:
+    mypass: redhat123
+  
+  tasks:
+    - name: Create User
+      ansible.builtin.user:
+        name: "keith"
+        # password: "{{ lookup('ansible.builtin.password','keith_pass.txt',length=8, chars=['digits','ascii_letters'], encrypt='sha512_crypt') }} "
+        password: "{{ mypass | password_hash('sha512') }} "
+        uid: 2001
+        comment: "{{ 'keith' | upper }}"
+        update_password: always
+      # delegate_to: workstation.lab.example.com
+      become: true
+
+    # - name: Create File 1
+    #   ansible.builtin.copy:
+    #     content: "Hello Andrew 2"
+    #     dest: /tmp/f1
+    #     mode: "0644"
+
+
+    # - name: Install Package
+    #   ansible.builtin.dnf:
+    #     name: httpd
+    #     state: present
+
+    # - name: Create File 2
+    #   ansible.builtin.copy:
+    #     content: "Hello Vijaya 2"
+    #     dest: /tmp/f2
+    #     mode: "0644"
+
+      # YAML Format
+      # INI Format
+      # ansible.builtin.copy: content="Hello Andrew" dest=/tmp/f1

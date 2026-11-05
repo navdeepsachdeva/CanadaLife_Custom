@@ -1,0 +1,56 @@
+- name: Cisco Playbook
+  hosts: iosxe1.lab.example.com
+  gather_facts: false
+  tasks:
+    - name: Modify GE1 Description
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "Hello Daniel"
+
+    - name: Setup motd banner
+      cisco.ios.ios_banner:
+        banner: motd
+        state: present
+        text: "Hello Second Day 2"
+
+- name: Linux Playbook
+  hosts: aap.lab.example.com
+  gather_facts: false
+  tasks:
+    - name: Create File 1
+      ansible.builtin.copy:
+        content: Some earlier playbooks might use a shorthand method to define tasks by putting the module parameters on the same line as the module name
+        dest: /tmp/f1
+        mode: "0644"
+     
+    - name: Create File 2
+      ansible.builtin.copy:
+        content: >
+          Some earlier playbooks might
+          use a shorthand method to define tasks
+          by putting the module parameters
+          on the same line as the module name
+        dest: /tmp/f2
+        mode: "0644"
+
+    - name: Create File 3
+      ansible.builtin.copy:
+        content: |
+          Some earlier playbooks might
+          use a shorthand method to define tasks
+          by putting the module parameters
+          on the same line as the module name
+        dest: /tmp/f3
+        mode: "0644"
+
+- name: Juniper Playbook
+  hosts: junos1.lab.example.com
+  gather_facts: false
+  tasks:
+    - name: Get interface configuration
+      juniper.device.config:
+        retrieve: 'committed'
+        filter: "interfaces/interface"
+        options:
+          format: text

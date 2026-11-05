@@ -1,0 +1,39 @@
+- name: Template Collect Info Multiple System Playbook
+  hosts: cisco,control
+  gather_facts: false
+  become: true
+  
+  tasks:
+
+    - name: Collect CISCO Facts Manually
+      cisco.ios.ios_facts:
+        gather_subset: all
+        gather_network_resources: all
+      when: inventory_hostname in groups["cisco"]
+
+    - name: Collect Linux Facts Manually
+      ansible.builtin.setup:
+      when: inventory_hostname in groups["control"]
+
+    - name: Store Info on Control Node
+      block:
+        - name: Install Web Package
+          ansible.builtin.dnf:
+            name: httpd
+            state: present
+
+        - name: Deploy Info Page
+          ansible.builtin.template:
+            src: templates/complex_info.j2
+            dest: /var/www/html/index.html
+            mode: "0644"
+
+        - name: Start Web Service
+          ansible.builtin.service:
+            name: httpd
+            state: restarted
+      # delegate_to: workstation.lab.example.com
+      when: inventory_hostname in groups["control"]
+      vars:
+        ansible_user: devops
+      

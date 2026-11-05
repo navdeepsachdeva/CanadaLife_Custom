@@ -1,0 +1,14 @@
+API             = cliconf
+API             = cliconf
+API             = cliconf
+Hostname        = iosxe1.lab.example.com
+Image           = bootflash:packages.conf
+IOS Type        = IOS-XE
+Model           = C8000V
+Python Version  = 3.12.12
+Serial Number   = 98YBTV2RGCJ
+Net System      = ios
+Net Version     = 17.18.02
+Free Memory     = 2218.930690765381
+Total Memory    = 2415.745536804199
+Encryption      = True

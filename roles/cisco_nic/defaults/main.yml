@@ -1,0 +1,5 @@
+---
+# defaults file for cisco_nic
+
+cisco_nic_ge1_desc: "Level 2 Defaults GE1"
+cisco_nic_ge2_desc: "Level 2 Defaults GE2"

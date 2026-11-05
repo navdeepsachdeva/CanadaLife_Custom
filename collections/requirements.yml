@@ -1,0 +1,13 @@
+collections:
+  - name: cisco.catalystcenter
+    version: 2.12.0
+
+  - name: dalibo.advanced
+
+  - name: network.acls
+    source: https://aap.lab.example.com/api/galaxy/content/published/
+    version: "4.0.0"
+  
+  - name: network.base
+    source: https://aap.lab.example.com/api/galaxy/content/published/
+    version: "8.0.0"

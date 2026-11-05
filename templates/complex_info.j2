@@ -1,0 +1,42 @@
+<html>
+  <head>
+  	<title>Collect Information</title>
+  </head>
+
+<body>
+
+{% for sys in groups["all"]  %}
+
+  {% if sys in groups["control"] %}
+             {{ ansible_facts['fqdn']  }}<br/>
+             {{ ansible_default_ipv4.address }}<br/>
+             {{ ansible_facts.default_ipv4.address }}<br/>
+             {{ ansible_facts['default_ipv4']['address'] }}<br/>
+             {{ ansible_facts['architecture'] }}<br/>
+             {{ ansible_facts.date_time.time  }}<br/>
+             {{ ansible_facts.devices.sda.size | default("NA")  }}<br/>
+             {{ ansible_facts['distribution']  }}<br/>
+             {{ ansible_fqdn  }}<br/>
+             {{ ansible_facts['selinux']['config_mode']  | default("NA")}}<br/>
+             {{ ansible_facts['memory_mb']['real']['total'] }}<br/>
+  {% endif %}
+  {% if sys in groups["cisco"] %}
+	  Local Variable  = {{ sys }}<br/><br/>
+          Hostname        = {{ hostvars[sys]['ansible_facts']['net_hostname'] }}<br/><br/>
+          API             = {{ hostvars[sys]['ansible_facts']['net_api'] }}<br/><br/>
+          Image           = {{ hostvars[sys]['ansible_facts']['net_image'] }}<br/><br/>
+          IOS Type        = {{ hostvars[sys]['ansible_facts']['net_iostype'] }}<br/><br/>
+          Model           = {{ hostvars[sys]['ansible_facts']['net_model'] }}<br/><br/>
+          Python Version  = {{ hostvars[sys]['ansible_facts']['net_python_version'] }}<br/><br/>
+          Serial Number   = {{ hostvars[sys]['ansible_facts']['net_serialnum'] }}<br/><br/>
+          Net System      = {{ hostvars[sys]['ansible_facts']['net_system'] }}<br/><br/>
+          Net Version     = {{ hostvars[sys]['ansible_facts']['net_version'] }}<br/><br/>
+          Free Memory     = {{ hostvars[sys]['ansible_facts']['net_memfree_mb'] }}<br/><br/>
+          Total Memory    = {{ hostvars[sys]['ansible_facts']['net_memtotal_mb'] }}<br/><br/>
+          Encryption      = {{ hostvars[sys]['ansible_facts']['network_resources']['service']['private_config_encryption'] }}<br/><br/>
+	<br/><br/><br/><br/>
+  {% endif %}
+{% endfor %}
+
+</body>
+</html>

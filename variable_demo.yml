@@ -1,0 +1,60 @@
+- name: Cisco Playbook
+  hosts: cisco,arista
+  gather_facts: false
+  # Bad Way #
+  vars:
+    floor: "Level 12 Play vars"
+
+  # Good for Development Environment not Prod
+  # Level 13 Interactive
+  vars_prompt:
+    - name: floor
+      prompt: "Which Floor are you Working ?"
+      private: false
+
+  vars_files:
+    - ./outside_vars.yml
+  tasks:
+    - name: Print DICT
+      ansible.builtin.debug:
+        msg: "{{ vlan.hypervisors.name }} // {{ vlan['vms']['name'] }}"
+
+
+    - name: "Outside Block Print Variable Task 1 {{ inventory_hostname }}"
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} = {{ floor }}"
+
+    - name: Block of Tasks
+      block:
+        - name: Inside Block Print Variable Task 2
+          ansible.builtin.debug:
+            msg: "{{ inventory_hostname }} = {{ floor }}"
+          vars:
+            floor: "Level 17 Task vars (for the task only)"
+
+        - name: Inside Block Print Variable Task 3
+          ansible.builtin.debug:
+            msg: "{{ inventory_hostname }} = {{ floor }}"
+      vars:
+        floor: "Level 16 Block vars (for tasks in block only)"
+
+    - name: Outside Block Print Variable Task 4
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} = {{ floor }}"
+    # - name: Modify GE1 Description
+    #   cisco.ios.ios_interfaces:
+    #     config:
+    #       - name: GigabitEthernet1
+    #         description: "Hello Daniel"
+
+    # - name: Modify GE2 Description
+    #   cisco.ios.ios_interfaces:
+    #     config:
+    #       - name: GigabitEthernet2
+    #         description: "Hello Andrew 2"
+
+    # - name: Setup motd banner
+    #   cisco.ios.ios_banner:
+    #     banner: motd
+    #     state: present
+    #     text: "Hello Second Day 2"

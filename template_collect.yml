@@ -1,0 +1,33 @@
+- name: Template Collect Info Playbook
+  hosts: iosxe1.lab.example.com
+  gather_facts: false
+  become: true
+  
+  tasks:
+
+    - name: Collect Facts Manually
+      cisco.ios.ios_facts:
+        gather_subset: all
+        gather_network_resources: all
+
+    - name: Store Info on Control Node
+      block:
+        - name: Install Web Package
+          ansible.builtin.dnf:
+            name: httpd
+            state: present
+
+        - name: Deploy Info Page
+          ansible.builtin.template:
+            src: templates/simple_info.j2
+            dest: /var/www/html/index.html
+            mode: "0644"
+
+        - name: Start Web Service
+          ansible.builtin.service:
+            name: httpd
+            state: restarted
+      delegate_to: workstation.lab.example.com
+      vars:
+        ansible_user: devops
+      

@@ -1,0 +1,22 @@
+<html>
+  <head>
+  	<title>Collect Information</title>
+  </head>
+
+<body>
+
+          Hostname        = {{ ansible_facts['net_hostname'] }}<br/>
+          API             = {{ ansible_facts['net_api'] }}<br/>
+          Image           = {{ ansible_facts['net_image'] }}<br/>
+          IOS Type        = {{ ansible_facts['net_iostype'] }}<br/>
+          Model           = {{ ansible_facts['net_model'] }}<br/>
+          Python Version  = {{ ansible_facts['net_python_version'] }}<br/>
+          Serial Number   = {{ ansible_facts['net_serialnum'] }}<br/>
+          Net System      = {{ ansible_facts['net_system'] }}<br/>
+          Net Version     = {{ ansible_facts['net_version'] }}<br/>
+          Free Memory     = {{ ansible_facts['net_memfree_mb'] }}<br/>
+          Total Memory    = {{ ansible_facts['net_memtotal_mb'] }}<br/>
+          Encryption      = {{ ansible_facts['network_resources']['service']['private_config_encryption'] }}<br/>
+
+</body>
+</html>

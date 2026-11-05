@@ -1,0 +1,50 @@
+floor: "Level 14 Play vars_files"
+
+simple_list:
+  - GigabitEthernet1
+  - GigabitEthernet2
+
+
+complex_list:
+  - eth_name: GigabitEthernet1
+    eth_desc: "Hello 1"
+    eth_state: merged
+
+  - eth_name: GigabitEthernet2
+    eth_desc: "Hello 2"
+    eth_state: replaced
+
+eth_dict:
+  GigabitEthernet1: "Hello Dict 1"
+  GigabitEthernet2: "Hello Dict 2"
+
+cisco_ntp_servers:
+  - 172.25.23.240
+  - 172.25.23.230
+  - 172.25.23.250
+
+cisco_name_servers:
+  - 172.25.250.210
+  - 172.25.250.220
+  - 172.25.250.221
+  - 172.25.250.222
+  - 172.25.250.223
+
+
+
+vlan:
+  hypervisors:
+    name: physical-servers
+    mtu: 9000
+    id: 1000
+  vms:
+    name: virtual-servers
+    mtu: 1500
+    id: 2000
+  dmz:
+    name: dmz-servers
+    mtu: 1500
+    id: 3000
+# floor: CHANGE_ME
+# MYSQL_USER: CHANGE_ME
+# MYSQL_PASSWORD: CHANGE_ME

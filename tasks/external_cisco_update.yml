@@ -1,0 +1,15 @@
+- name: Cisco Update 1
+  ansible.builtin.debug:
+    msg: "Success Cisco Update 1"
+
+- name: Cisco Update 2
+  ansible.builtin.debug:
+    msg: "Success Cisco Update 2"
+
+- name: Cisco Update 3
+  ansible.builtin.debug:
+    msg: "Success Cisco Update 3"
+
+- name: Cisco Update 4
+  ansible.builtin.debug:
+    msg: "Success Cisco Update 4"

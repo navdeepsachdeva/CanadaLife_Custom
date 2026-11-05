@@ -1,0 +1,23 @@
+- name: Template Collect Info Multiple System Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  become: true
+  vars_files:
+    - vars/outside_vars.yml
+  
+  tasks:
+
+    - name: Store Commands in a File STEP 1
+      ansible.builtin.template:
+        src: templates/command_generator.j2
+        dest: cisco_commands/{{ inventory_hostname }}.txt
+        mode: "0644"
+
+
+    - name: Run the Commands Step 2
+      cisco.ios.ios_config:
+        src: cisco_commands/{{ inventory_hostname }}.txt
+
+    # - name: Run the Commands ONE STEP
+    #   cisco.ios.ios_config:
+    #     src: templates/command_generator.j2

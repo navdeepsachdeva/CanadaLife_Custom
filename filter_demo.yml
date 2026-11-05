@@ -1,0 +1,48 @@
+- name: Linux Playbook
+  hosts: aap.lab.example.com
+  gather_facts: false
+  vars:
+    myips:
+    - 172.25.250.254
+    - 10.10.2.20/8
+    - 192.168.2.15/24
+    - 192.268.2.15/24
+    - 88.22.44.55/8
+    - 188.44.11.88/18
+    - fe80::a1c0:e2e5:a201:8cfa/64
+    - 100.24.45.24
+  tasks:
+    # - name: Create File 1
+    #   ansible.builtin.copy:
+    #     content: "{{ floor | upper | length }}"
+    #     dest: /tmp/f1
+    #     mode: "0644"
+
+    - name: Print
+      ansible.builtin.debug:
+        msg: "{{ myips | ansible.utils.ipv4 }}"
+        # msg: "{{ myips | ansible.utils.ipv4('revdns') }}"
+      register: out
+        # msg: "{{ myips | ansible.utils.ipv4('broadcast') }}"
+        # msg: "{{ myips | ansible.utils.ipv4('public') }}"
+        # msg: "{{ myips | ansible.utils.ipv4('private') }}"
+        # msg: "{{ myips | ansible.utils.ipv4 }}"
+        # msg: "{{ myips | ansible.utils.ipaddr | ansible.utils.ipv4 }}"
+        #
+    - name: Go through
+      ansible.builtin.debug:
+        msg: "{{ out}} // {{ meme | default('Not Available') }}"
+
+    - name: Didn't go through
+      ansible.builtin.debug:
+        msg: "{{ myips | difference(out.msg) }}"
+
+    - name: Read device inventory from CSV
+      community.general.read_csv:
+        path: ./vars/devices.csv
+      register: device_data
+      delegate_to: localhost
+
+    - name: Print Devices Data
+      ansible.builtin.debug:
+        msg: "{{ device_data }}"

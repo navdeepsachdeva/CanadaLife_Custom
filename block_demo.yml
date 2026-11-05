@@ -1,0 +1,64 @@
+- name: changed whenPlaybook
+  hosts: iosxe1.lab.example.com
+  gather_facts: true
+  tasks:
+    - name: "Outside Block Print Variable Task 1"
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} = {{ floor }}"
+
+    - name: Block of CIsco Model Tasks
+      when: ansible_facts['net_model'] == "C8000V"
+      vars:
+        floor: "Level 16 Block vars"
+      block:
+        - name: Setup motd banner
+          cisco.ios.ios_banner:
+            banner: motd
+            state: present
+            text: "Hello {{ floor }}"
+
+        - name: Modify GE1 Description
+          cisco.ios.ios_interfaces:
+            config:
+              - name: GigabitEthernet1
+                description: "Hello {{ floor }}"
+
+        - name: Modify GE2 Description
+          cisco.ios.ios_interfaces:
+            config:
+              - name: GigabitEthernet2
+                description: "Hello {{ floor12 }} 2"
+        - name: One More
+          ansible.builtin.debug:
+            msg: "Just Me"
+        
+      rescue:
+        - name: Rollback Configs
+          ansible.builtin.debug:
+            msg: "MayDay Mayday Undo Everything"
+
+        - name: Setup motd banner
+          cisco.ios.ios_banner:
+            banner: motd
+            state: present
+            text: "Hello Original"
+
+        - name: Modify GE1 Description
+          cisco.ios.ios_interfaces:
+            config:
+              - name: GigabitEthernet1
+                description: "Hello Original"
+
+        - name: Modify GE2 Description
+          cisco.ios.ios_interfaces:
+            config:
+              - name: GigabitEthernet2
+                description: "Hello Original"
+      always:
+        - name: Inform Customer ABout Status
+          ansible.builtin.debug:
+            msg: "EMail Sent"
+
+    - name: "Outside Block Print Variable Task 2"
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} = {{ floor }}"

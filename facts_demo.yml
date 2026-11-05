@@ -1,0 +1,39 @@
+- name: Facts Demo
+  hosts: iosxe1*
+  gather_facts: false
+  tasks:
+
+    - name: Collect Facts Manually
+      cisco.ios.ios_facts:
+        gather_subset: all
+        gather_network_resources: all
+      
+    - name: Store Facts in File
+      ansible.builtin.copy:
+        dest: /tmp/{{ inventory_hostname }}.txt
+        # dest: info_hosts/{{ inventory_hostname }}.txt
+        content: |
+          API             = {{ ansible_net_api }}
+          API             = {{ ansible_facts.net_api }}
+          API             = {{ ansible_facts['net_api'] }}
+          Hostname        = {{ ansible_facts['net_hostname'] }}
+          Image           = {{ ansible_facts['net_image'] }}
+          IOS Type        = {{ ansible_facts['net_iostype'] }}
+          Model           = {{ ansible_facts['net_model'] }}
+          Python Version  = {{ ansible_facts['net_python_version'] }}
+          Serial Number   = {{ ansible_facts['net_serialnum'] }}
+          Net System      = {{ ansible_facts['net_system'] }}
+          Net Version     = {{ ansible_facts['net_version'] }}
+          Free Memory     = {{ ansible_facts['net_memfree_mb'] }}
+          Total Memory    = {{ ansible_facts['net_memtotal_mb'] }}
+          Encryption      = {{ ansible_facts['network_resources']['service']['private_config_encryption'] }}
+      delegate_to: aap.lab.example.com
+      # delegate_to: workstation
+
+    - name: Modify GE1 Description
+      when: ansible_facts['net_version'] > "17"
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "Hello Daniel"
+

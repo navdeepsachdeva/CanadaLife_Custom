@@ -1,0 +1,27 @@
+- name: Import a Playbook
+  ansible.builtin.import_playbook: simple_linux.yml
+
+- name: Integration Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  tasks:
+    # - name: Static Import a task file
+    #   ansible.builtin.import_tasks:
+    #     file: tasks/external_cisco_update.yml
+    #   when: meme is not defined
+
+    # - name: Dynamic Include a task file
+    #   ansible.builtin.include_tasks:
+    #     file: tasks/external_cisco_config.yml
+    #   when: meme is not defined
+
+    - name: Loop for Task Files
+      ansible.builtin.include_tasks:
+      # ansible.builtin.import_tasks:
+        file: "{{ item }}"
+      loop:
+        - tasks/external_cisco_update.yml
+        - tasks/external_cisco_config.yml
+
+- name: Import a Playbook          
+  ansible.builtin.import_playbook: multiple_play.yml

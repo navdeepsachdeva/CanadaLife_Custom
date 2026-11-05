@@ -1,0 +1,17 @@
+- name: Survey Controller Playbook
+  hosts: all
+  gather_facts: false
+  # vars_prompt not Compatibale with Controller GUI
+  # vars_prompt:
+  #   - name: fav_color
+  #     prompt: "Which is your Fav Color?"
+  #     private: false
+
+  #   - name: fav_dest
+  #     prompt: "Where you want to Go ?"
+  #     private: false
+  tasks:
+
+    - name: "Outside Block Print Variable Task"
+      ansible.builtin.debug:
+        msg: "{{ fav_color }} = {{ fav_dest }}"
