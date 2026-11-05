@@ -12,3 +12,14 @@
     config:
       - name: GigabitEthernet2
         description: "{{ cisco_nic_ge2_desc }}"
+
+- name: Collect Facts Manually
+  cisco.ios.ios_facts:
+    gather_subset: all
+    gather_network_resources: all
+
+- name: Deploy Info Page
+  ansible.builtin.template:
+    src: simple_info.j2
+    dest: ./info_hosts/index.html
+    mode: "0644"
